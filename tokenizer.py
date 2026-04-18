@@ -1,32 +1,14 @@
+from flask import Flask, request, render_template, send_file
+import io
+
+app = Flask(__name__)
+
 DOUBLE_OPERATORS = {"==", "!=", "<=", ">=", "&&", "||"}
 SINGLE_OPERATORS = {"+", "-", "*", "/", "=", "<", ">"}
 PUNCTUATION = {";", ",", "(", ")", "{", "}"}
 KEYWORDS = {"int", "float", "if", "else", "while", "return", "for", "print"}
 
 
-#FILE INPUT
-def main():
-    print("==== TOKEN ANALYZER (FILE MODE) ====")
-    filename = input("Masukkan nama file (contoh: test.c): ")
-
-    try:
-        #coba utf-8 dulu
-        with open(filename, "r", encoding="utf-8") as f:
-            code = f.read()
-    except UnicodeDecodeError:
-        #fallback kalau gagal
-        with open(filename, "r", encoding="latin-1") as f:
-            code = f.read()
-    except FileNotFoundError:
-        print("Error: file tidak ditemukan!")
-        return ""
-
-    print("\nFile berhasil dibaca!\n")
-    print("Isi file:\n", code)
-    return code
-
-
-# TOKENIZER
 def tokenize(code):
     tokens = []
     i = 0
@@ -34,12 +16,10 @@ def tokenize(code):
     while i < len(code):
         c = code[i]
 
-        # skip spasi
         if c.isspace():
             i += 1
             continue
 
-        # string
         if c == '"':
             token = '"'
             i += 1
@@ -50,11 +30,10 @@ def tokenize(code):
                 token += '"'
                 i += 1
             else:
-                print("Warning: string tidak ditutup!")
+                token += " [UNTERMINATED STRING]"
             tokens.append(token)
             continue
 
-        # comment //
         if i + 1 < len(code) and code[i:i+2] == "//":
             token = ""
             while i < len(code) and code[i] != '\n':
@@ -63,7 +42,6 @@ def tokenize(code):
             tokens.append(token)
             continue
 
-        # comment /* */
         if i + 1 < len(code) and code[i:i+2] == "/*":
             token = "/*"
             i += 2
@@ -74,29 +52,25 @@ def tokenize(code):
                 token += "*/"
                 i += 2
             else:
-                print("Warning: komentar tidak ditutup!")
+                token += " [UNTERMINATED COMMENT]"
             tokens.append(token)
             continue
 
-        # double operator
         if i + 1 < len(code) and code[i:i+2] in DOUBLE_OPERATORS:
             tokens.append(code[i:i+2])
             i += 2
             continue
 
-        #single operator
         if c in SINGLE_OPERATORS:
             tokens.append(c)
             i += 1
             continue
 
-        #punctuation
         if c in PUNCTUATION:
             tokens.append(c)
             i += 1
             continue
 
-        #number
         if c.isdigit():
             token = ""
             has_dot = False
@@ -108,7 +82,6 @@ def tokenize(code):
             tokens.append(token)
             continue
 
-        #identifier
         if c.isalpha() or c == "_":
             token = ""
             while i < len(code) and (code[i].isalnum() or code[i] == "_"):
@@ -117,74 +90,92 @@ def tokenize(code):
             tokens.append(token)
             continue
 
-        #fallback
         tokens.append(c)
         i += 1
 
     return tokens
 
 
-#CLASSIFIER
 def classify(token):
     if token in KEYWORDS:
-        return "Reserved Word"
-    elif token.startswith("//") or token.startswith("/*"):
+        return "Reserve Word"
+    if token.startswith("//") or token.startswith("/*"):
         return "Comment"
-    elif token in DOUBLE_OPERATORS or token in SINGLE_OPERATORS:
-        return "Operator"
-    elif token in PUNCTUATION:
-        return "Punctuation"
-    elif token.startswith('"') and token.endswith('"'):
+    if token in DOUBLE_OPERATORS or token in SINGLE_OPERATORS:
+        return "Kalimat Matematika / Operator"
+    if token in PUNCTUATION:
+        return "Simbol dan Tanda Baca"
+    if token.startswith('"') and token.endswith('"'):
         return "String"
-    elif token.replace('.', '', 1).isdigit():
+    if token.replace('.', '', 1).isdigit():
         return "Number"
-    elif token[0].isalpha() or token[0] == "_":
-        return "Variable"
-    else:
-        return "Unknown"
+    if token and (token[0].isalpha() or token[0] == "_"):
+        return "Variabel"
+    return "Unknown"
 
 
-#STATISTICS
 def count_tokens(tokens):
     stats = {}
-    for t in tokens:
-        t_type = classify(t)
-        stats[t_type] = stats.get(t_type, 0) + 1
+    for token in tokens:
+        token_type = classify(token)
+        stats[token_type] = stats.get(token_type, 0) + 1
     return stats
 
 
-#OUTPUT
-def print_tokens(tokens):
-    print("\nHasil:")
-    for t in tokens:
-        print(f"{t:15} : {classify(t)}")
+@app.route("/", methods=["GET", "POST"])
+def index():
+    code = ""
+    tokens = []
+    stats = {}
+
+    if request.method == "POST":
+        uploaded_file = request.files.get("code_file")
+        code_from_textarea = request.form.get("code", "")
+
+        if uploaded_file and uploaded_file.filename:
+            raw_data = uploaded_file.read()
+            try:
+                code = raw_data.decode("utf-8")
+            except UnicodeDecodeError:
+                code = raw_data.decode("latin-1")
+        else:
+            code = code_from_textarea
+
+        if code.strip():
+            tokens = tokenize(code)
+            stats = count_tokens(tokens)
+
+    token_rows = [(token, classify(token)) for token in tokens]
+
+    return render_template(
+        "index.html",
+        code=code,
+        tokens=tokens,
+        token_rows=token_rows,
+        stats=stats,
+        total_tokens=len(tokens),
+        total_categories=len(stats)
+    )
 
 
-def print_stats(stats):
-    print("\nStatistik:")
-    for k, v in stats.items():
-        print(f"{k:15} : {v}")
-
-
-def save_to_file(tokens):
-    with open("hasil_token.txt", "w", encoding="utf-8") as f:
-        for t in tokens:
-            f.write(f"{t:15} : {classify(t)}\n")
-    print("\nHasil disimpan ke hasil_token.txt")
-
-
-#MAIN
-if __name__ == "__main__":
-    code = main()
-
-    if code == "":
-        exit()
-
+@app.route("/download")
+def download():
+    code = request.args.get("code", "")
     tokens = tokenize(code)
+    output = io.StringIO()
 
-    print_tokens(tokens)
+    for token in tokens:
+        output.write(f"{token:20} : {classify(token)}\n")
 
-    stats = count_tokens(tokens)
-    print_stats(stats)
+    buffer = io.BytesIO(output.getvalue().encode("utf-8"))
+    buffer.seek(0)
+    return send_file(
+        buffer,
+        as_attachment=True,
+        download_name="hasil_token.txt",
+        mimetype="text/plain"
+    )
 
-    save_to_file(tokens)
+
+if __name__ == "__main__":
+    app.run(debug=True)

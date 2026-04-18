@@ -1,0 +1,402 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Contrast & Clean Palette */
+    --bg: #eef2f6; /* Latar belakang lebih tegas untuk menonjolkan panel putih */
+    --surface: #ffffff; 
+    --surface-soft: #f8fafc; 
+    --surface-accent: #f1f5f9;
+    
+    --border: #cbd5e1; /* Border lebih tebal untuk struktur */
+    --border-hover: #94a3b8;
+    --divider: #e2e8f0;
+    
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    
+    --accent-solid: #0f172a;
+    --accent-highlight: #0b0b0b; /* Warna biru profesional untuk aksen */
+    
+    /* Stronger Elevation for Separation */
+    --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.05), 0 4px 6px -2px rgba(15, 23, 42, 0.03);
+    
+    /* Strict Geometry */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    
+    /* Modern Typography */
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', Consolas, monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background-color: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.page-shell {
+    min-height: 100vh;
+    padding: 56px 24px;
+}
+
+.container {
+    max-width: 1240px; /* Sedikit dilebarkan untuk layout yang lebih lega */
+    margin: 0 auto;
+}
+
+/* Base Panel Styles with Strong Demarcation */
+.hero, .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    /* Garis tebal di atas panel untuk penanda seksi yang sangat jelas */
+    border-top: 4px solid var(--accent-solid); 
+}
+
+.hero {
+    padding: 48px;
+    margin-bottom: 40px; /* Jarak antar seksi diperbesar */
+}
+
+/* Menyembunyikan "command" / label eyebrow */
+.eyebrow {
+    display: none; 
+}
+
+.hero h1 {
+    margin: 0 0 16px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+}
+
+.hero p {
+    margin: 0;
+    max-width: 720px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.layout-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(320px, 1fr);
+    gap: 40px; /* Pemisah ruang vertikal antar kolom yang sangat jelas */
+    margin-bottom: 40px;
+}
+
+.panel {
+    padding: 32px;
+}
+
+.section-head {
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    /* Garis pembagi internal yang tegas */
+    border-bottom: 2px solid var(--divider);
+}
+
+.section-head h2 {
+    margin: 0 0 8px;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.section-head p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Inputs & Form */
+.upload-inline {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+    padding: 24px;
+    background: var(--surface-soft);
+    border: 1px dashed var(--border-hover);
+    border-radius: var(--radius-md);
+}
+
+.upload-inline label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.upload-inline input[type="file"] {
+    width: 100%;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-family: var(--font-sans);
+}
+
+.upload-inline input[type="file"]::file-selector-button {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    margin-right: 16px;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.upload-inline input[type="file"]::file-selector-button:hover {
+    background: var(--surface-accent);
+    border-color: var(--border-hover);
+}
+
+textarea {
+    width: 100%;
+    min-height: 420px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    resize: vertical;
+    background: var(--surface);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    outline: none;
+    transition: all 0.2s ease;
+    box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.02);
+}
+
+textarea:focus {
+    border-color: var(--accent-highlight);
+    box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.02), 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+textarea::placeholder {
+    color: #94a3b8;
+}
+
+/* Buttons */
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-sans);
+}
+
+.btn-primary {
+    background: var(--accent-solid);
+    color: #ffffff;
+    border: 1px solid var(--accent-solid);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background: #1e293b;
+    border-color: #1e293b;
+    transform: translateY(-1px);
+}
+
+.btn-muted {
+    background: var(--surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-muted:hover {
+    background: var(--surface-accent);
+    border-color: var(--border-hover);
+}
+
+/* Stats Cards */
+.summary-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.summary-card {
+    padding: 24px;
+    border-radius: var(--radius-md);
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    /* Tambahan border kiri sebagai aksen pemisah pada card */
+    border-left: 4px solid var(--accent-highlight);
+}
+
+.summary-card span {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.summary-card strong {
+    font-size: 2.75rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+/* List & Tables */
+.stats-list {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--divider);
+}
+
+.stat-row:last-child {
+    border-bottom: none;
+}
+
+.stat-row:nth-child(even) {
+    background-color: var(--surface-soft); /* Zebra striping untuk pemisahan data */
+}
+
+.stat-row span {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.stat-row strong {
+    font-size: 0.95rem;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    background: var(--surface);
+}
+
+thead {
+    background: var(--surface-accent);
+}
+
+th {
+    padding: 16px 20px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    font-weight: 700;
+    border-bottom: 2px solid var(--border);
+}
+
+td {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--divider);
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.token-text {
+    font-family: var(--font-mono);
+    word-break: break-word;
+}
+
+.pill {
+    display: inline-flex;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: var(--surface-accent);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.empty-box {
+    padding: 48px 24px;
+    text-align: center;
+    border: 1px dashed var(--border-hover);
+    border-radius: var(--radius-md);
+    background: var(--surface-soft);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+@media (max-width: 920px) {
+    .layout-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+}
+
+@media (max-width: 640px) {
+    .page-shell {
+        padding: 32px 16px;
+    }
+
+    .hero, .panel {
+        padding: 24px;
+    }
+
+    .summary-cards {
+        grid-template-columns: 1fr;
+    }
+}
