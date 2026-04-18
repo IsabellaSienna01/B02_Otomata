@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page-shell">
+        <div class="container">
+            <header class="hero">
+                <div class="hero-text">
+                    <h1>Token Analyzer</h1>
+                    <p>
+                        Masukkan kode program melalui upload file atau tempel langsung ke editor.
+                    </p>
+                </div>
+            </header>
+
+            <form method="POST" enctype="multipart/form-data">
+                <section class="layout-grid">
+                    <div class="panel panel-input">
+                        <div class="section-head">
+                            <div>
+                                <h2>Input Program</h2>
+                                <p>Upload file atau tempel kode yang ingin dianalisis.</p>
+                            </div>
+                        </div>
+
+                        <div class="upload-inline">
+                            <label for="code_file">File program</label>
+                            <input type="file" id="code_file" name="code_file" accept=".c,.cpp,.txt,.py,.java,.js">
+                        </div>
+
+                        <textarea name="code" placeholder="Tempel kode program di sini...">{{ code }}</textarea>
+
+                        <div class="actions">
+                            <button type="submit" class="btn btn-primary">Analyze</button>
+                            <a href="/" class="btn btn-muted">Reset</a>
+                            {% if tokens %}
+                            <a href="/download?code={{ code|urlencode }}" class="btn btn-outline">Download Hasil</a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="panel panel-stats">
+                        <div class="section-head">
+                            <div>
+                                <h2>Statistik</h2>
+                                <p>Ringkasan hasil analisis token.</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-cards">
+                            <div class="summary-card featured">
+                                <span>Total Token</span>
+                                <strong>{{ total_tokens }}</strong>
+                            </div>
+                            <div class="summary-card">
+                                <span>Kategori Terdeteksi</span>
+                                <strong>{{ total_categories }}</strong>
+                            </div>
+                        </div>
+
+                        <div class="stats-list">
+                            {% for key, value in stats.items() %}
+                            <div class="stat-row">
+                                <span>{{ key }}</span>
+                                <strong>{{ value }}</strong>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </section>
+            </form>
+
+            <section class="panel result-panel">
+                <div class="section-head">
+                    <div>
+                        <h2>Hasil Token</h2>
+                        <p>Daftar token dan kategorinya.</p>
+                    </div>
+                </div>
+
+                {% if tokens %}
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Token</th>
+                                <th>Kategori</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for token, token_type in token_rows %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td class="token-text">{{ token }}</td>
+                                <td><span class="pill">{{ token_type }}</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="empty-box">
+                    <p>Belum ada hasil analisis. Masukkan program lalu tekan <strong>Analyze</strong>.</p>
+                </div>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+</body>
+</html>
