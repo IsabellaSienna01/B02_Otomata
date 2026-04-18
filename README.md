@@ -42,47 +42,40 @@ Token yang dihasilkan kemudian diklasifikasikan ke dalam beberapa kategori seper
 
 ---
 
-## Cara Menjalankan
+Cara Menjalankan
+1. Pastikan Python sudah terinstall.
+2. Pastikan struktur project seperti berikut, bisa dilakukan dengan git clone
 
-1. Pastikan Python sudah terinstall
-2. Siapkan file kode (contoh: `test.c`)
-3. Jalankan program:
-
-```bash
-python tokenizer.py
+```
+ project/
+ ├── app.py
+ ├── requirements.txt
+ ├── templates/
+ │   └── index.html
+ └── static/
+     └── style.css
 ```
 
-4. Masukkan nama file:
-
-```text
-test.c
+```
+ git clone https://github.com/IsabellaSienna01/B02_Otomata.git
+```
+3. Install dependency Flask:
+```
+ pip install -r requirements.txt
+```
+4. Jalankan program:
+```
+ python tokenizer.py
+```
+5. Buka browser, lalu akses:
+```
+ http://127.0.0.1:5000
 ```
 
----
-
-## Contoh Input (C)
-
-```c
-int x = 10;
-float y = 3.14;
-
-// komentar
-if (x >= 10) {
-    print("Hello");
-}
-```
-
----
-
-## Contoh Output
-
-```text
-int             : Reserved Word
-x               : Variable
-=               : Operator
-10              : Number
-;               : Punctuation
-```
+7. Masukkan program yang ingin dicek dengan salah satu cara berikut:
+- upload file kode seperti test.c
+- tempel langsung kode program ke textarea
+8. Tekan tombol Analyze untuk melihat hasil tokenisasi dan klasifikasinya.
 
 ---
 
