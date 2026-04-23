@@ -7,7 +7,6 @@ $L = \{ x \in (0+1)^+ \mid x \text{ berakhir dengan } 1 \text{ dan tidak mengand
 
 Antarmuka pengguna dibangun menggunakan pustaka Tkinter, sehingga pengguna dapat melihat proses transisi state secara visual dan interaktif.
 
----
 ## Tujuan
 * **Otomasi Identifikasi**
 Memvalidasi string biner sesuai aturan bahasa formal secara cepat dan akurat.
@@ -15,7 +14,7 @@ Memvalidasi string biner sesuai aturan bahasa formal secara cepat dan akurat.
 Membantu pemahaman konsep Finite State Machine melalui tampilan graf state dan transisi.
 * **Analisis Step-by-Step**
 Menyediakan trace log untuk menelusuri proses pembacaan string karakter demi karakter.
----
+
 ## Fitur
 * **Diagram State Interaktif**
 Menampilkan graf FSM dengan penyorotan (highlight) state aktif secara real-time.
@@ -28,7 +27,6 @@ Menampilkan tabel proses dengan format: (Step, From State, Input Symbol, To Stat
 * **Statistik Sederhana**
 Menghitung jumlah string yang diterima dan ditolak selama program berjalan.
 
----
 ## Cara Menjalankan
 1. Pastikan Python sudah terinstall.
 2. Lakukan git clone
@@ -50,7 +48,7 @@ Menghitung jumlah string yang diterima dan ditolak selama program berjalan.
         * Animasi Perpindahan state
         * Trace log proses
         * Status akhir string (Accepted/Rejected)  
----
+
 ## Definisi State
 FSM terdiri dari 4 State utama:
 | State | Peran           | Deskripsi                          |
