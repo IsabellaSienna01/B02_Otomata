@@ -6,6 +6,7 @@
 | Isabella Sienna Sulisthio | 5025241199 |
 | Akmal Yusuf | 5025241212 |
 
+# Sebelum ETS
 ## Praktikum 1
 >Buatlah program computer yang dapat membaca inputan berupa program computer lain, dan dapat menghasilkan output berupa token-token (string-string yang terbaca) dan mengelompokkannya sesuai dengan sifat string tersebut:
     a) Reserve words
@@ -22,3 +23,9 @@ Rancanglah user interface sedemikian hingga pengguna dapat mudah menginputkan se
 Rancanglah user interface sedemikian hingga pengguna dapat mudah menginputkan string yang akan didentifikasi keanggotaannya.
 
 **Implementasi: https://github.com/IsabellaSienna01/B02_Otomata/tree/main/Praktikum%202**
+
+# Sebelum EAS
+## Praktikum 3
+> Buatlah sebuah program untuk mengotomasi mesin PDA. Rancanglah user interface sedemikian hingga pengguna dapat mudah menginputkan string yang akan dibaca dan ditentukan keanggotaannya (_Accepted_ atau _Rejected_) oleh mesin PDA tersebut.
+
+**Implementasi: https://github.com/IsabellaSienna01/B02_Otomata/tree/main/Praktikum%203**
