@@ -15,7 +15,7 @@ Link Website: https://auto-pda.vercel.app/
   - **Stack Display**: Visualisasi tumpukan (stack) secara real-time.
   - **Transition Log**: Catatan riwayat transisi yang dilakukan mesin step-by-step.
 - **Kontrol Simulasi**: Jalankan simulasi secara otomatis (Auto Play) atau manual (Next/Prev step).
-- **Preset Edukatif**: Tersedia preset siap pakai untuk kasus populer:
+- **Preset**: Tersedia preset siap pakai untuk kasus populer:
   - $a^n b^n$
   - Tanda Kurung Seimbang (Balanced Parentheses)
   - Odd Palindrome ($wcw^R$)
