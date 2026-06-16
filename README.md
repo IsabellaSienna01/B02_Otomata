@@ -28,5 +28,5 @@ Rancanglah user interface sedemikian hingga pengguna dapat mudah menginputkan st
 ## Praktikum 3
 > Buatlah sebuah program untuk mengotomasi mesin PDA. Rancanglah user interface sedemikian hingga pengguna dapat mudah menginputkan string yang akan dibaca dan ditentukan keanggotaannya (_Accepted_ atau _Rejected_) oleh mesin PDA tersebut.
 
-**Implementasi: https://github.com/IsabellaSienna01/B02_Otomata/tree/main/Praktikum%203**
+**Implementasi: https://github.com/IsabellaSienna01/B02_Otomata/tree/main/Praktikum%203** <br>
 **Link Website: https://auto-pda.vercel.app/**
